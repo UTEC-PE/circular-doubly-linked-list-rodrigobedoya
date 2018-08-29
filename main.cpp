@@ -6,7 +6,7 @@
 #include "list.h"
 
 using namespace std;
-
+/*
 #define MIN 100
 #define MAX 500
 
@@ -19,8 +19,15 @@ using namespace std;
 int generateRandomInt(int min, int max);
 void insertIntoList(List<int> &numbers);
 void removeFromList(List<int> &numbers);
-
-int main(int argc, char *argv[]) {
+*/
+int main(int argc, char *argv[]) 
+{
+    List<int> aList;
+    aList.push_back(1324234);
+    aList.push_front(22);
+    cout << aList.get(1)  << endl;
+    return 0;
+    /*
     cout << "===========================================================" << endl;
     cout << "\tDouble Linked Circular List Practice" << endl;
     cout << "===========================================================" << endl << endl;
@@ -74,9 +81,10 @@ int main(int argc, char *argv[]) {
     cout << endl;
 
     system("read");
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;*/
 }
 
+/*
 int generateRandomInt(int min, int max) {
     mt19937 rng;
     rng.seed(random_device()());
@@ -100,4 +108,4 @@ void removeFromList(List<int> &numbers) {
         case POP_FRONT: numbers.pop_front(); break;
         case POP_BACK: numbers.pop_back(); break;
     }
-} 
+} */
