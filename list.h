@@ -79,11 +79,56 @@ class List {
         }
 
 
-        void pop_front();
-        void pop_back();
+        void pop_front()
+        {
+            if(start == NULL)
+                return;
+
+            Node<T> *temp = start;
+            nodes--;
+            if(start->next == start)
+            {
+                start = NULL;
+                temp->killSelf();
+                return;
+            }
+            
+            start->prev->next = start->next;
+            start = start->next;
+            start->prev = temp->prev;
+            temp->killSelf();
+            return;
+
+        }
+
+        void pop_back()
+        {
+            if(start == NULL)
+                return;
+            
+            Node<T> *temp = start->prev;
+
+            if(nodes == 1)
+            {
+                start = NULL;
+                temp->killSelf();
+                return;
+            }
+
+            temp->prev->next = start;
+            start->prev = temp->prev;
+            temp->killSelf();
+            nodes--;
+            return;   
+        }
         
         T get(int position)
-        {
+        {   
+            if(nodes == 0)
+            {
+                throw out_of_range("Empty List!");
+            }   
+
             if (position >= nodes || position < 0)
             {
                 throw out_of_range("Request is out of range!");
@@ -100,7 +145,55 @@ class List {
             }
         }
 
-        void concat(List<T> &other);
+
+        T operator [] (int position)
+        {
+            if(nodes == 0)
+            {
+                throw out_of_range("Empty List!");
+            }   
+
+            if (position >= nodes || position < 0)
+            {
+                throw out_of_range("Request is out of range!");
+            }
+
+            Node<T> *temp = start;
+            for (int i = 0; i < nodes; i++)
+            {
+                if(i == position)
+                {
+                    return temp->data;
+                }
+                temp = temp->next;   
+            }
+        }
+
+
+        void concat(List<T> &other)
+        {
+            nodes += other.nodes;
+
+            if(other.start == NULL )
+            {
+                return;
+            }
+
+            else if(start == NULL)
+            {
+                start = other.start;
+                return;
+            }
+
+
+            Node<T> *tail1 = start->prev;
+            Node<T> *tail2 = other.start->prev;
+
+            tail1->next = other.start;
+            start->prev = tail2;
+            tail2->next = start;
+            other.start->prev = tail1;
+        }
         
         bool empty()
         {
@@ -110,7 +203,8 @@ class List {
         int size()
         {
             return nodes;
-            /* //if nodes wasn't there
+
+            /* //if nodes attr wasn't there
             int length = 0;
             if(start == NULL)
                 return length;
@@ -127,9 +221,35 @@ class List {
             return length;*/
         }
         
-        void clear();
-        Iterator<T> begin();
-        Iterator<T> end();
+        void clear()
+        {
+            if(start == NULL)
+                return;
+
+            Node<T> *temp = start->next;
+            while(temp != start)
+            {
+                Node<T> *to_delete = temp;
+                temp = temp->next;
+                to_delete->killSelf();
+            }
+            start = NULL;
+            temp->killSelf();
+            nodes = 0;
+            return;
+        }
+
+        Iterator<T> begin()
+        {
+            Iterator<T> begin(start);
+            return begin;
+        }
+
+        Iterator<T> end()
+        {
+            Iterator<T> end(start->prev);
+            return end;
+        }
 
         ~List(){}
 };
