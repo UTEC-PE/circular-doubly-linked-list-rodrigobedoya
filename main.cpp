@@ -20,8 +20,11 @@ int generateRandomInt(int min, int max);
 void insertIntoList(List<int> &numbers);
 void removeFromList(List<int> &numbers);
 
-int main(int argc, char *argv[]) 
-{
+ mt19937 rng;
+
+int main(int argc, char *argv[]) {
+    rng.seed(random_device()());
+    
     cout << "===========================================================" << endl;
     cout << "\tDouble Linked Circular List Practice" << endl;
     cout << "===========================================================" << endl << endl;
@@ -78,10 +81,7 @@ int main(int argc, char *argv[])
     return EXIT_SUCCESS;
 }
 
-
 int generateRandomInt(int min, int max) {
-    mt19937 rng;
-    rng.seed(random_device()());
     uniform_int_distribution<mt19937::result_type> distribution(min, max); 
     return distribution(rng);
 }

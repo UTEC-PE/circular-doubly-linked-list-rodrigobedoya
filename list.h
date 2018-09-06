@@ -30,7 +30,7 @@ class List {
 
         T back()
         {
-            return start->prev->data;
+            return start->prev->data; // Falta la verificación como en el front
         }
 
         void push_front(T value)
@@ -45,7 +45,7 @@ class List {
                 return;
             }
 
-            Node<T> *temp = new Node<T>;
+            Node<T> *temp = new Node<T>; // Se podría mejorar
             temp->data = value;
             temp->next = start;
             temp->prev = start->prev;
@@ -53,7 +53,7 @@ class List {
             start->prev = temp;
             start = temp;
             nodes++;
-            return;
+            return; // Este return no es necesario 
         }
 
         void push_back(T value)
@@ -75,7 +75,7 @@ class List {
             start->prev->next = temp;
             start->prev = temp;
             nodes++;
-            return;
+            return; // Este return no es necesario 
         }
 
 
@@ -143,6 +143,7 @@ class List {
                 }
                 temp = temp->next;   
             }
+            // Hay un warning por falta de return al final
         }
 
 
@@ -251,7 +252,7 @@ class List {
             return end;
         }
 
-        ~List(){}
+        ~List(){} // Falta destructor
 };
 
 #endif
